@@ -7,9 +7,12 @@ import com.training.user.application.service.UserService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @RestController
@@ -17,7 +20,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserController {
 
-    private final static Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
     @PostMapping("/purchase")
@@ -49,5 +52,19 @@ public class UserController {
         var users = this.userService.getAll();
         logger.info("GET /getAll returned {}", users);
         return users;
+    }
+
+    @GetMapping("/search")
+    public UserDTO getByEmail(@RequestParam String email) {
+        if (email == null || email.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "email must not be blank");
+        }
+
+        logger.info("Received request: GET /search for email");
+        try {
+            return userService.getByEmail(email.trim());
+        } catch (NoSuchElementException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found");
+        }
     }
 }

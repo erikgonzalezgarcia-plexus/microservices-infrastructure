@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.NoSuchElementException;
 
 @Service
 @AllArgsConstructor
@@ -46,5 +46,12 @@ public class UserService implements UserUseCase {
     @Override
     public List<UserDTO> getAll() {
         return userRepository.findAll().stream().map(userMapper::toDTO).toList();
+    }
+
+    @Override
+    public UserDTO getByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(userMapper::toDTO)
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
     }
 }

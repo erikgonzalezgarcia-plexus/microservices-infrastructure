@@ -5,7 +5,6 @@ import com.training.user.application.dto.UserDTO;
 import com.training.user.application.dto.order.OrderDTO;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface UserUseCase {
 
@@ -16,4 +15,6 @@ public interface UserUseCase {
     UserDTO addUser(UserDTO userDTO);
 
     List<UserDTO> getAll();
+
+    UserDTO getByEmail(String email);
 }
