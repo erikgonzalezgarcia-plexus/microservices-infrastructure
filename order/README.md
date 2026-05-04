@@ -19,6 +19,21 @@ mvn spring-boot:run
 
 The service will start on port 8082.
 
+## Build and Formatting
+Spotless is configured in this microservice and runs automatically during the Maven `verify` phase.
+
+### Check formatting
+```bash
+cd order
+./mvnw verify
+```
+
+### Apply formatting automatically
+```bash
+cd order
+./mvnw spotless:apply
+```
+
 ## Running with Podman
 
 ### Building the Container Image
