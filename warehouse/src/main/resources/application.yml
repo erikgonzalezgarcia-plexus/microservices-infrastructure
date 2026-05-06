@@ -15,6 +15,10 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+warehouse:
+  debug:
+    endpoints:
+      enabled: false
 # Micrometer Tracing Configuration
 management:
   tracing:

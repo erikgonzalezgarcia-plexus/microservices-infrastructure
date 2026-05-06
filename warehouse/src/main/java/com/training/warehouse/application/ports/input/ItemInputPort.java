@@ -3,6 +3,8 @@ package com.training.warehouse.application.ports.input;
 import com.training.warehouse.application.usecases.ItemUseCase;
 import com.training.warehouse.domain.entity.Item;
 import com.training.warehouse.infrastructure.persistence.ItemRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -32,5 +34,10 @@ public class ItemInputPort implements ItemUseCase {
     @Override
     public List<Item> getAll() {
         return itemRepository.findAll();
+    }
+
+    @Override
+    public Page<Item> getAll(Pageable pageable) {
+        return itemRepository.findAll(pageable);
     }
 }
